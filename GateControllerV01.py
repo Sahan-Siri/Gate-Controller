@@ -3,6 +3,7 @@ import time
 import tkinter as tk
 from tkinter import ttk
 from threading import Thread
+import webbrowser  # Import for opening the link in a browser
 
 # Function to create a pyfirmata board instance and start an iterator
 def setup_board(port):
@@ -220,6 +221,18 @@ voltage_a1_label.pack(anchor=tk.W)
 
 voltage_a2_label = tk.Label(root, text="Battery: -- V")
 voltage_a2_label.pack(anchor=tk.W)
+
+# Function to open the link in a web browser
+def open_about_link(event):
+    webbrowser.open("https://github.com/Sahan-Siri/Gate-Controller")
+
+# Create "About" hyperlink
+about_label = tk.Label(root, text="About", fg="blue", cursor="hand2")
+# Place the "About" hyperlink at the bottom-right
+about_label.pack(side=tk.RIGHT, anchor=tk.S, padx=10, pady=10)
+
+about_label.bind("<Button-1>", open_about_link)  # Bind left-click event to open the link
+
 
 # Start the GUI loop
 root.mainloop()
