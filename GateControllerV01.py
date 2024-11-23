@@ -142,11 +142,11 @@ def update_voltages():
 
         # Scale readings from 0-1 to 0-5V
         if voltage_a0 is not None:
-            voltage_a0_label.config(text=f"9V Super Capacitor: {(voltage_a0 * 10.158)+0.0457:.2f} V")
+            voltage_a0_label.config(text=f"9V Super Capacitor: {voltage_a0*25:.2f} V")
         if voltage_a1 is not None:
-            voltage_a1_label.config(text=f"3V Super Capacitor: {voltage_a1 * 25:.2f} V")
+            voltage_a1_label.config(text=f"3V Super Capacitor: {(2.5897*(voltage_a1)**3)-(4.8153*(voltage_a1)**2)+5.6571*(voltage_a1):.2f} V")
         if voltage_a2 is not None:
-            voltage_a2_label.config(text=f"Battery: {voltage_a2 * 25:.2f} V")
+            voltage_a2_label.config(text=f"Battery: {voltage_a2*25:.2f} V")
         
     root.after(500, update_voltages)
 
