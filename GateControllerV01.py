@@ -97,9 +97,6 @@ def start_switching():
         selected_charging_pins = [pin_num for pin_num, var in pwm_charging_checkboxes.items() if var.get()]
         selected_discharging_pins = [pin_num for pin_num, var in pwm_discharging_checkboxes.items() if var.get()]
 
-        if len(selected_charging_pins) != 2 or len(selected_discharging_pins) != 2:
-            status_label.config(text="Select exactly 2 pins each for charging and discharging")
-            return
 
         def switch():
             while switching:
@@ -183,22 +180,22 @@ dead_band_entry = tk.Entry(control_frame)
 dead_band_entry.grid(row=1, column=1, sticky=tk.W)
 
 # Duty cycle and parallel checkboxes for charging and discharging
-tk.Label(control_frame, text="Charging PWM Duty Cycle (%):").grid(row=2, column=0, sticky=tk.W)
+tk.Label(control_frame, text="PWM 1 Duty Cycle (%):").grid(row=2, column=0, sticky=tk.W)
 charging_duty_cycle_entry = tk.Entry(control_frame)
 charging_duty_cycle_entry.grid(row=2, column=1, sticky=tk.W)
 
-tk.Label(control_frame, text="Discharging PWM Duty Cycle (%):").grid(row=3, column=0, sticky=tk.W)
+tk.Label(control_frame, text="PWM 2 Duty Cycle (%):").grid(row=3, column=0, sticky=tk.W)
 discharging_duty_cycle_entry = tk.Entry(control_frame)
 discharging_duty_cycle_entry.grid(row=3, column=1, sticky=tk.W)
 
 # PWM pin selection checkboxes for charging
-tk.Label(control_frame, text="Select Charging Pins:").grid(row=4, column=0, sticky=tk.W)
+tk.Label(control_frame, text="Select PWM 1 Pins:").grid(row=4, column=0, sticky=tk.W)
 pwm_charging_checkboxes = {pin_number: tk.IntVar() for pin_number in range(1, 6)}
 for idx, (pin_number, var) in enumerate(pwm_charging_checkboxes.items()):
     tk.Checkbutton(control_frame, text=f"Gate {pin_number}", variable=var).grid(row=4, column=idx+1)
 
 # PWM pin selection checkboxes for discharging
-tk.Label(control_frame, text="Select Discharging Pins:").grid(row=5, column=0, sticky=tk.W)
+tk.Label(control_frame, text="Select PWM 2 Pins:").grid(row=5, column=0, sticky=tk.W)
 pwm_discharging_checkboxes = {pin_number: tk.IntVar() for pin_number in range(1, 6)}
 for idx, (pin_number, var) in enumerate(pwm_discharging_checkboxes.items()):
     tk.Checkbutton(control_frame, text=f"Gate {pin_number}", variable=var).grid(row=5, column=idx+1)
