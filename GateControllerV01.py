@@ -79,7 +79,6 @@ def reset():
         pin.write(0)
         pin_states[pin_number].set(0)
 
-# Function to start switching
 def start_switching():
     try:
         frequency = float(frequency_entry.get())
@@ -97,23 +96,35 @@ def start_switching():
         selected_charging_pins = [pin_num for pin_num, var in pwm_charging_checkboxes.items() if var.get()]
         selected_discharging_pins = [pin_num for pin_num, var in pwm_discharging_checkboxes.items() if var.get()]
 
-
         def switch():
+            start_time = time.perf_counter()
             while switching:
                 # Charging cycle
                 for pin_num in selected_charging_pins:
                     pins[pin_num].write(1)
-                time.sleep(charging_time)
+                while time.perf_counter() - start_time < charging_time:
+                    pass
                 for pin_num in selected_charging_pins:
                     pins[pin_num].write(0)
-                time.sleep(dead_band)
+
+                # Dead band
+                start_time = time.perf_counter()
+                while time.perf_counter() - start_time < dead_band:
+                    pass
+
                 # Discharging cycle
+                start_time = time.perf_counter()
                 for pin_num in selected_discharging_pins:
                     pins[pin_num].write(1)
-                time.sleep(discharging_time)
+                while time.perf_counter() - start_time < discharging_time:
+                    pass
                 for pin_num in selected_discharging_pins:
                     pins[pin_num].write(0)
-                time.sleep(dead_band)
+
+                # Dead band
+                start_time = time.perf_counter()
+                while time.perf_counter() - start_time < dead_band:
+                    pass
 
         global switching_thread
         global switching
@@ -123,6 +134,7 @@ def start_switching():
 
     except ValueError:
         status_label.config(text="Error: Invalid frequency, dead band, or duty cycle value")
+
 
 # Function to stop switching
 def stop_switching():
