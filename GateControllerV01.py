@@ -159,7 +159,7 @@ def update_voltages():
         if voltage_a2 is not None:
             voltage_a2_label.config(text=f"Battery: {voltage_a2*25:.2f} V")
         if voltage_a3 is not None:
-            voltage_a3_label.config(text=f"Current: {((voltage_a3*5-2.5)/0.1):.2f} V")
+            voltage_a3_label.config(text=f"Current: {((voltage_a3*5-2.5)/0.1):.2f} A")
         
     root.after(500, update_voltages)
 
