@@ -15,6 +15,7 @@ def setup_board(port):
         board.analog[0].enable_reporting()
         board.analog[1].enable_reporting()
         board.analog[2].enable_reporting()
+        board.analog[3].enable_reporting()
         return board
     except Exception as e:
         return None
@@ -148,6 +149,7 @@ def update_voltages():
         voltage_a0 = board.analog[0].read()
         voltage_a1 = board.analog[1].read()
         voltage_a2 = board.analog[2].read()
+        voltage_a3 = board.analog[3].read()
 
         # Scale readings from 0-1 to 0-5V
         if voltage_a0 is not None:
@@ -156,6 +158,8 @@ def update_voltages():
             voltage_a1_label.config(text=f"3V Super Capacitor: {(2.5897*(voltage_a1)**3)-(4.8153*(voltage_a1)**2)+5.6571*(voltage_a1):.2f} V")
         if voltage_a2 is not None:
             voltage_a2_label.config(text=f"Battery: {voltage_a2*25:.2f} V")
+        if voltage_a3 is not None:
+            voltage_a3_label.config(text=f"Current: {((voltage_a3*5-2.5)/0.1):.2f} V")
         
     root.after(500, update_voltages)
 
@@ -231,6 +235,8 @@ voltage_a1_label.pack(anchor=tk.W)
 voltage_a2_label = tk.Label(root, text="Battery: -- V")
 voltage_a2_label.pack(anchor=tk.W)
 
+voltage_a3_label = tk.Label(root, text="Current: -- A")
+voltage_a3_label.pack(anchor=tk.W)
 # Function to open the link in a web browser
 def open_about_link(event):
     webbrowser.open("https://github.com/Sahan-Siri/Gate-Controller")
